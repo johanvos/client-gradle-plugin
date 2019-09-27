@@ -32,7 +32,7 @@
 package com.gluonhq.gradle.attach;
 
 import com.gluonhq.gradle.ClientExtension;
-import com.gluonhq.omega.attach.AttachResolver;
+//import com.gluonhq.omega.attach.AttachResolver;
 import org.gradle.api.Action;
 import org.gradle.api.NamedDomainObjectContainer;
 import org.gradle.api.Project;
@@ -105,6 +105,7 @@ public class AttachConfiguration {
      * configuration will be included.
      */
     private void applyConfiguration() {
+        /*
         if (lastAppliedConfiguration != null) {
             lastAppliedConfiguration.getDependencies()
                     .removeIf(dependency -> AttachResolver.DEPENDENCY_GROUP.equals(dependency.getGroup()));
@@ -126,9 +127,11 @@ public class AttachConfiguration {
         }
 
         lastAppliedConfiguration = configuration;
+        */
     }
-
+/*
     private Object generateDependencyNotation(Configuration configuration, AttachServiceDefinition pluginDefinition, String target) {
+
         Map<String, String> dependencyNotationMap = new HashMap<>();
         dependencyNotationMap.put("group", AttachResolver.DEPENDENCY_GROUP);
         dependencyNotationMap.put("name", getDependencyName(pluginDefinition));
@@ -150,5 +153,6 @@ public class AttachConfiguration {
     private String getDependencyClassifier(AttachServiceDefinition pluginDefinition, String target) {
         return pluginDefinition.getSupportedPlatform(target);
     }
+    */
 
 }

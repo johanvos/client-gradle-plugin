@@ -30,10 +30,10 @@
 package com.gluonhq.gradle.tasks;
 
 import com.gluonhq.gradle.ClientExtension;
-import com.gluonhq.omega.Configuration;
-import com.gluonhq.omega.Omega;
-import com.gluonhq.omega.model.TargetTriplet;
-import com.gluonhq.omega.util.Constants;
+import com.gluonhq.substrate.SubstrateDispatcher;
+import com.gluonhq.substrate.model.Configuration;
+import com.gluonhq.substrate.model.Triplet;
+import com.gluonhq.substrate.Constants;
 import org.gradle.api.Project;
 import org.gradle.api.artifacts.DependencySet;
 import org.gradle.api.file.FileCollection;
@@ -67,32 +67,32 @@ class ConfigBuild {
         clientConfig.setJavaStaticSdkVersion(clientExtension.getJavaStaticSdkVersion());
         clientConfig.setJavafxStaticSdkVersion(clientExtension.getJavafxStaticSdkVersion());
 
-        String osname = System.getProperty("os.name", "Mac OS X").toLowerCase(Locale.ROOT);
-        TargetTriplet hostTriplet;
+        String osname = System.getProperty("os.name").toLowerCase(Locale.ROOT);
+        Triplet hostTriplet;
         if (osname.contains("mac")) {
-            hostTriplet = new TargetTriplet(Constants.AMD64_ARCH, Constants.HOST_MAC, Constants.TARGET_MAC);
+            hostTriplet = new Triplet(Constants.ARCH_AMD64, Constants.VENDOR_APPLE, Constants.OS_DARWIN);
         } else if (osname.contains("nux")) {
-            hostTriplet = new TargetTriplet(Constants.AMD64_ARCH, Constants.HOST_LINUX, Constants.TARGET_LINUX);
+            hostTriplet = new Triplet(Constants.AMD64_ARCH, Constants.HOST_LINUX, Constants.TARGET_LINUX);
         } else {
             throw new RuntimeException("OS " + osname + " not supported");
         }
-        clientConfig.setHost(hostTriplet);
+        clientConfig.setHostTriplet(hostTriplet);
 
-        TargetTriplet targetTriplet = null;
+        Triplet targetTriplet = null;
         String target = clientExtension.getTarget().toLowerCase(Locale.ROOT);
         switch (target) {
             case Constants.TARGET_HOST:
                 if (osname.contains("mac")) {
-                    targetTriplet = new TargetTriplet(Constants.AMD64_ARCH, Constants.HOST_MAC, Constants.TARGET_MAC);
+                    targetTriplet = new Triplet(Constants.AMD64_ARCH, Constants.HOST_MAC, Constants.TARGET_MAC);
                 } else if (osname.contains("nux")) {
-                    targetTriplet = new TargetTriplet(Constants.AMD64_ARCH, Constants.HOST_LINUX, Constants.TARGET_LINUX);
+                    targetTriplet = new Triplet(Constants.AMD64_ARCH, Constants.HOST_LINUX, Constants.TARGET_LINUX);
                 }
                 break;
             case Constants.TARGET_IOS:
-                targetTriplet = new TargetTriplet(Constants.ARM64_ARCH, Constants.HOST_MAC, Constants.TARGET_IOS);
+                targetTriplet = new Triplet(Constants.ARM64_ARCH, Constants.HOST_MAC, Constants.TARGET_IOS);
                 break;
             case Constants.TARGET_IOS_SIM:
-                targetTriplet = new TargetTriplet(Constants.AMD64_ARCH, Constants.HOST_MAC, Constants.TARGET_IOS);
+                targetTriplet = new Triplet(Constants.AMD64_ARCH, Constants.HOST_MAC, Constants.TARGET_IOS);
                 break;
             default:
                 throw new RuntimeException("No valid target found for " + target);
@@ -157,7 +157,7 @@ class ConfigBuild {
             String cp = cp0 + File.pathSeparator;
             project.getLogger().debug("CP: " + cp);
 
-            Omega.nativeCompile(buildRoot, clientConfig, cp);
+            SubstrateDispatcher.nativeCompile(buildRoot, clientConfig, cp);
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -31,8 +31,8 @@
  */
 package com.gluonhq.gradle.attach;
 
-import com.gluonhq.omega.attach.AttachService;
-import com.gluonhq.omega.util.Constants;
+import com.gluonhq.substrate.attach.AttachService;
+//import com.gluonhq.omega.util.Constants;
 import org.gradle.api.GradleException;
 import org.gradle.api.Named;
 import org.gradle.api.logging.LogLevel;
@@ -48,13 +48,13 @@ public class AttachServiceDefinition implements Named {
     private static final Logger LOGGER = Logging.getLogger(AttachServiceDefinition.class.getName());
 
     private String name;
-    private AttachService service;
+   // private AttachService service;
 
     private String version;
 
     public AttachServiceDefinition(String name) {
         this.name = name;
-
+/*
         try {
             this.service = AttachService.valueOf(name.replace('-', '_').toUpperCase(Locale.ROOT));
         } catch (IllegalArgumentException e) {
@@ -64,6 +64,7 @@ public class AttachServiceDefinition implements Named {
             LOGGER.log(LogLevel.ERROR, "Could not determine Attach service for name '" + name + "'. The following services are available: " + services);
             throw new GradleException("Invalid name for Attach service: " + name, e);
         }
+        */
     }
 
     @Override
@@ -114,5 +115,6 @@ public class AttachServiceDefinition implements Named {
     public int hashCode() {
         return name.hashCode();
     }
+
 
 }
