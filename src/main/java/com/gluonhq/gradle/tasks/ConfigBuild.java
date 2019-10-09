@@ -63,7 +63,8 @@ class ConfigBuild {
 
     void configClient() {
         clientConfig = new Configuration();
-        clientConfig.setGraalLibsVersion(clientExtension.getGraalLibsVersion());
+        clientConfig.setGraalPath(clientExtension.getGraalPath());
+//        clientConfig.setGraalLibsVersion(clientExtension.getGraalLibsVersion());
         clientConfig.setJavaStaticSdkVersion(clientExtension.getJavaStaticSdkVersion());
         clientConfig.setJavafxStaticSdkVersion(clientExtension.getJavafxStaticSdkVersion());
 
@@ -72,7 +73,8 @@ class ConfigBuild {
         if (osname.contains("mac")) {
             hostTriplet = new Triplet(Constants.ARCH_AMD64, Constants.VENDOR_APPLE, Constants.OS_DARWIN);
         } else if (osname.contains("nux")) {
-            hostTriplet = new Triplet(Constants.AMD64_ARCH, Constants.HOST_LINUX, Constants.TARGET_LINUX);
+            // TODO fix this (hard-coded arch)
+            hostTriplet = new Triplet(Constants.ARCH_AMD64, Constants.VENDOR_LINUX, Constants.OS_LINUX);
         } else {
             throw new RuntimeException("OS " + osname + " not supported");
         }
@@ -82,17 +84,13 @@ class ConfigBuild {
         String target = clientExtension.getTarget().toLowerCase(Locale.ROOT);
         switch (target) {
             case Constants.TARGET_HOST:
-                if (osname.contains("mac")) {
-                    targetTriplet = new Triplet(Constants.AMD64_ARCH, Constants.HOST_MAC, Constants.TARGET_MAC);
-                } else if (osname.contains("nux")) {
-                    targetTriplet = new Triplet(Constants.AMD64_ARCH, Constants.HOST_LINUX, Constants.TARGET_LINUX);
-                }
+                targetTriplet = hostTriplet;
                 break;
             case Constants.TARGET_IOS:
-                targetTriplet = new Triplet(Constants.ARM64_ARCH, Constants.HOST_MAC, Constants.TARGET_IOS);
+                targetTriplet = new Triplet(Constants.ARCH_ARM64, Constants.VENDOR_APPLE, Constants.OS_DARWIN);
                 break;
             case Constants.TARGET_IOS_SIM:
-                targetTriplet = new Triplet(Constants.AMD64_ARCH, Constants.HOST_MAC, Constants.TARGET_IOS);
+                targetTriplet = new Triplet(Constants.ARCH_AMD64, Constants.VENDOR_APPLE, Constants.TARGET_IOS);
                 break;
             default:
                 throw new RuntimeException("No valid target found for " + target);
@@ -113,7 +111,7 @@ class ConfigBuild {
 
         List<Path> classPath = getClassPathFromSourceSets();
         clientConfig.setUseJavaFX(classPath.stream().anyMatch(f -> f.getFileName().toString().contains("javafx")));
-        clientConfig.setGraalLibsUserPath(clientExtension.getGraalLibsPath());
+   //    clientConfig.setGraalLibsUserPath(clientExtension.getGraalLibsPath());
 
         clientConfig.setLlcPath(clientExtension.getLlcPath());
         clientConfig.setEnableCheckHash(clientExtension.isEnableCheckHash());

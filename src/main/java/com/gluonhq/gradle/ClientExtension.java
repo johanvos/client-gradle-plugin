@@ -128,6 +128,8 @@ public class ClientExtension {
      */
     private String graalLibsPath;
 
+    private String graalPath;
+
     /**
      * The path to the directory containing LLC tool.
      */
@@ -154,7 +156,7 @@ public class ClientExtension {
     private AttachConfiguration attachConfiguration;
 
     public ClientExtension(Project project, ObjectFactory objectFactory) {
-        this.graalLibsVersion = DEFAULT_GRAAL_LIBS_VERSION;
+   //     this.graalLibsVersion = DEFAULT_GRAAL_LIBS_VERSION;
         this.javaStaticSdkVersion = DEFAULT_JAVA_STATIC_SDK_VERSION;
         this.javafxStaticSdkVersion = DEFAULT_JAVAFX_STATIC_SDK_VERSION;
         this.target = DEFAULT_TARGET;
@@ -173,17 +175,21 @@ public class ClientExtension {
 
         attachConfiguration = objectFactory.newInstance(AttachConfiguration.class, project);
     }
+//
+//    public String getGraalLibsVersion() {
+//        return graalLibsVersion;
+//    }
+//
+//    public void setGraalLibsVersion(String graalLibsVersion) {
+//        this.graalLibsVersion = graalLibsVersion;
+//    }
 
-    public String getGraalLibsVersion() {
-        return graalLibsVersion;
+    public void setGraalPath(String v) {
+        this.graalPath = v;
     }
 
-    public void setGraalLibsVersion(String graalLibsVersion) {
-        this.graalLibsVersion = graalLibsVersion;
-    }
-
-    public String getGraalLibsPath() {
-        return graalLibsPath;
+    public String getGraalPath() {
+        return graalPath;
     }
 
     public String getLlcPath() {

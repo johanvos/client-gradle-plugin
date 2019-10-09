@@ -43,6 +43,7 @@ public class ClientNativeCompile extends ClientNativeBase {
 
     @TaskAction
     public void action() {
+        System.err.println("NATIVECOMPILE");
         getProject().getLogger().debug("ClientNativeCompile action");
         new ConfigBuild(project).build();
     }
