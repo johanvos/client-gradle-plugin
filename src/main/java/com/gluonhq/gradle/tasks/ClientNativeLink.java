@@ -29,8 +29,8 @@
  */
 package com.gluonhq.gradle.tasks;
 
-// import com.gluonhq.omega.Omega;
-// import com.gluonhq.omega.util.Constants;
+import com.gluonhq.substrate.Constants;
+import com.gluonhq.substrate.SubstrateDispatcher;
 import org.gradle.api.Project;
 import org.gradle.api.tasks.TaskAction;
 
@@ -47,19 +47,18 @@ public class ClientNativeLink extends ClientNativeBase {
 
     @TaskAction
     public void action() {
-//        getProject().getLogger().info("ClientNativeLink action");
-//
-//        ConfigBuild configBuild = new ConfigBuild(project);
-//        configBuild.configClient();
-//
-//        try {
-//            File client = project.getLayout().getBuildDirectory().dir(Constants.CLIENT_PATH).get().getAsFile();
-//            Path tmpPath = client.toPath().resolve(Constants.GVM_PATH).resolve(Constants.TMP_PATH);
-//            getProject().getLogger().debug("start linking at " + tmpPath.toString());
-//
-//            Omega.nativeLink(client.getAbsolutePath(), configBuild.getClientConfig());
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
+        getProject().getLogger().info("ClientNativeLink action");
+
+        ConfigBuild configBuild = new ConfigBuild(project);
+        configBuild.configClient();
+
+        try {
+            File client = project.getLayout().getBuildDirectory().dir(Constants.CLIENT_PATH).get().getAsFile();
+            Path tmpPath = client.toPath().resolve(Constants.GVM_PATH).resolve(Constants.TMP_PATH);
+            getProject().getLogger().debug("start linking at " + tmpPath.toString());
+            SubstrateDispatcher.nativeLink(client.getAbsolutePath(), configBuild.getClientConfig());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
