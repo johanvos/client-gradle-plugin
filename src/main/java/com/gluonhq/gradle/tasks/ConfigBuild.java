@@ -31,7 +31,7 @@ package com.gluonhq.gradle.tasks;
 
 import com.gluonhq.gradle.ClientExtension;
 import com.gluonhq.substrate.SubstrateDispatcher;
-import com.gluonhq.substrate.model.Configuration;
+import com.gluonhq.substrate.model.ProjectConfiguration;
 import com.gluonhq.substrate.model.Triplet;
 import com.gluonhq.substrate.Constants;
 import org.gradle.api.Project;
@@ -51,7 +51,7 @@ import java.util.stream.Collectors;
 
 class ConfigBuild {
 
-    private Configuration clientConfig;
+    private ProjectConfiguration clientConfig;
     private final Project project;
     private final ClientExtension clientExtension;
 
@@ -62,7 +62,7 @@ class ConfigBuild {
     }
 
     void configClient() {
-        clientConfig = new Configuration();
+        clientConfig = new ProjectConfiguration();
         clientConfig.setGraalPath(clientExtension.getGraalPath());
 //        clientConfig.setGraalLibsVersion(clientExtension.getGraalLibsVersion());
         clientConfig.setJavaStaticSdkVersion(clientExtension.getJavaStaticSdkVersion());
@@ -119,7 +119,7 @@ class ConfigBuild {
         clientConfig.setVerbose(clientExtension.isVerbose());
     }
 
-    Configuration getClientConfig() {
+    ProjectConfiguration getClientConfig() {
         return clientConfig;
     }
 
