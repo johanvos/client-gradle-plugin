@@ -30,6 +30,7 @@
 package com.gluonhq.gradle;
 
 import com.gluonhq.gradle.attach.AttachConfiguration;
+import com.gluonhq.substrate.Constants;
 import groovy.lang.Closure;
 import org.gradle.api.Project;
 import org.gradle.api.model.ObjectFactory;
@@ -41,7 +42,7 @@ import java.util.List;
 public class ClientExtension {
 
     private static final String DEFAULT_GRAAL_LIBS_VERSION = "20.0.0-ea+17";
-    private static final String DEFAULT_JAVA_STATIC_SDK_VERSION = "11-ea+6";
+//    private static final String DEFAULT_JAVA_STATIC_SDK_VERSION = "11-ea+6"; moved to Substrate
     private static final String DEFAULT_JAVAFX_STATIC_SDK_VERSION = "13-ea+7";
     private static final String DEFAULT_TARGET = "host";
 
@@ -157,7 +158,7 @@ public class ClientExtension {
 
     public ClientExtension(Project project, ObjectFactory objectFactory) {
    //     this.graalLibsVersion = DEFAULT_GRAAL_LIBS_VERSION;
-        this.javaStaticSdkVersion = DEFAULT_JAVA_STATIC_SDK_VERSION;
+        this.javaStaticSdkVersion = Constants.DEFAULT_JAVA_STATIC_SDK_VERSION;
         this.javafxStaticSdkVersion = DEFAULT_JAVAFX_STATIC_SDK_VERSION;
         this.target = DEFAULT_TARGET;
         this.backend = "";
