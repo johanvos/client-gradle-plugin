@@ -44,6 +44,7 @@ import org.gradle.api.tasks.compile.JavaCompile;
 
 import java.io.File;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -155,7 +156,7 @@ class ConfigBuild {
             String cp = cp0 + File.pathSeparator;
             project.getLogger().debug("CP: " + cp);
 
-            SubstrateDispatcher.nativeCompile(buildRoot, clientConfig, cp);
+            SubstrateDispatcher.nativeCompile(Paths.get(buildRoot), clientConfig, cp);
         } catch (Exception e) {
             e.printStackTrace();
         }
